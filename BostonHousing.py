@@ -10,7 +10,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
-from sklearn import preprocessing
 
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
@@ -109,15 +108,21 @@ plt.show()
 
 # Plotting Residuals
 resid = data_tot['MEDV'] - data_tot['yhat']
-norm_resid = preprocessing.normalize([resid])
-norm_resid = norm_resid.reshape(506, 1)
+resid = pd.DataFrame(resid)
+resid.columns = ['residual']
+
+resid_mean = resid.mean()
+resid_var = resid.var()
+
+norm_resid = (resid-resid_mean)/resid_var
+norm_resid = pd.DataFrame[norm_resid]
+norm_resid.columns = ['norm_resid']
+
+data_tot = data_tot.join(resid)
+data_tot = data_tot.join(norm_resid)
 
 x = range(0, 506, 1)
 
-plt.scatter(x=x, y = norm_resid)
+plt.scatter(x = x, y = data_tot['norm_resid'])
 plt.ylabel('Normalised Residuals')
-plt.title('Normalised Residuals in Data')
 plt.show()
-
-
-figure4 = sm.graphics.qqplot(resid)
