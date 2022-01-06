@@ -115,7 +115,7 @@ resid_mean = resid.mean()
 resid_var = resid.var()
 
 norm_resid = (resid-resid_mean)/resid_var
-norm_resid = pd.DataFrame[norm_resid]
+norm_resid = pd.DataFrame(norm_resid)
 norm_resid.columns = ['norm_resid']
 
 data_tot = data_tot.join(resid)
