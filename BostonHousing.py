@@ -126,3 +126,5 @@ x = range(0, 506, 1)
 plt.scatter(x = x, y = data_tot['norm_resid'])
 plt.ylabel('Normalised Residuals')
 plt.show()
+
+sns.relplot('yhat', 'norm_resid', data = data_tot, kind = 'scatter')
